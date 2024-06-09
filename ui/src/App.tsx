@@ -6,11 +6,15 @@ export const App: React.FC = () => {
 
   useEffect(() => {
     // 1 秒に 1 回 API を叩いて、サーバから状態を取得します。
-    setInterval(() => {
+    const intervalId = setInterval(() => {
       fetch("/api/state")
         .then((res) => res.json())
         .then((state) => setState(state));
     }, 1000);
+
+    return () => {
+      clearInterval(intervalId);
+    };
   }, []);
 
   if (!state) {
