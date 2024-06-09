@@ -1,0 +1,12 @@
+{
+  "name": "flask-react-example",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "ui:dev": "npm run --workspace ui dev",
+    "ui:build": "npm run --workspace ui build"
+  },
+  "workspaces": [
+    "ui"
+  ]
+}
