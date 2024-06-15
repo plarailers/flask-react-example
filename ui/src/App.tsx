@@ -5,7 +5,7 @@ export const App: React.FC = () => {
   const [state, setState] = useState();
 
   useEffect(() => {
-    // 1 秒に 1 回 API を叩いて、サーバから状態を取得します。
+    // ???msごとに API を叩いて、サーバから状態を取得します。
     const intervalId = setInterval(() => {
       fetch("/api/state")
         .then((res) => res.json())
@@ -35,17 +35,18 @@ export const App: React.FC = () => {
     { x: 50, y: 50 },
   ];
 
-  // t0 の位置と向きを計算します。
-  const t0 = calculatePositionAndDirection(
-    state["trains"]["t0"]["mileage"] / 100.0,
-    points,
-  );
+  // trainの位置と向きの計算
+  const trains = {};
+  for (const [trainId, train] of Object.entries(state["trains"])) {
+    trains[trainId] = calculatePositionAndDirection(
+      train["mileage"] / 100.0,
+      points,
+    );
+  }
 
-  // t1 の位置と向きを計算します。
-  const t1 = calculatePositionAndDirection(
-    state["trains"]["t1"]["mileage"] / 100.0,
-    points,
-  );
+  trains["t0"].color = "#ff0000";
+  trains["t1"].color = "#00ff00";
+  trains["t2"].color = "#ffff00";
 
   return (
     <>
@@ -61,17 +62,17 @@ export const App: React.FC = () => {
         />
 
         {/* 列車（<g></g> で囲んで移動と回転の変形をかけます。） */}
-        <g
-          transform={`translate(${t0.position.x}, ${t0.position.y}) rotate(${(t0.direction / Math.PI) * 180})`}
-        >
-          <polygon points="10,0 -10,-10 -5,0 -10,10 10,0" fill="#ff0000" />
-        </g>
+        {Object.entries(trains).map(([trainId, train]) => (
+          <g
+            transform={`translate(${train.position.x}, ${train.position.y}) rotate(${(train.direction / Math.PI) * 180})`}
+          >
+            <polygon points="10,0 -10,-10 -5,0 -10,10 10,0" fill={train.color} />
+          </g>
+        ))
+        }
 
-        <g
-          transform={`translate(${t1.position.x}, ${t1.position.y}) rotate(${(t1.direction / Math.PI) * 180})`}
-        >
-          <polygon points="10,0 -10,-10 -5,0 -10,10 10,0" fill="#00ff00" />
-        </g>
+
+
       </svg>
     </>
   );

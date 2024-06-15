@@ -12,6 +12,7 @@ state = {
     "trains": {
         "t0": {"mileage": 0.0},
         "t1": {"mileage": 50.0},
+        "t2": {"mileage": 10.0},
     },
 }
 
@@ -25,12 +26,10 @@ def get_state():
 # 状態を更新するループです。
 def update_state_loop():
     while True:
-        state["trains"]["t0"]["mileage"] = (
-            state["trains"]["t0"]["mileage"] + 0.5
-        ) % 100.0
-        state["trains"]["t1"]["mileage"] = (
-            state["trains"]["t1"]["mileage"] + 0.5
-        ) % 100.0
+        for train_id, train in state["trains"].items():
+            train["mileage"] = (
+                train["mileage"] + 0.5
+            ) % 100.0
         time.sleep(0.1)
 
 
