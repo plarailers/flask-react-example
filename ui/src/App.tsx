@@ -36,14 +36,14 @@ export const App: React.FC = () => {
   ];
 
   // trainの位置と向きの計算
-  const trains = {};
-  for (const [trainId, train] of Object.entries(state["trains"])) {
+const trains = {};
+  for (const [trainId, train] of Object.entries (state["trains"])) {
     trains[trainId] = calculatePositionAndDirection(
       train["mileage"] / 100.0,
       points,
     );
   }
-
+  
   trains["t0"].color = "#ff0000";
   trains["t1"].color = "#00ff00";
   trains["t2"].color = "#ffff00";
@@ -68,11 +68,11 @@ export const App: React.FC = () => {
           >
             <polygon points="10,0 -10,-10 -5,0 -10,10 10,0" fill={train.color} />
           </g>
-        ))
+          ))
         }
 
 
-
+      
       </svg>
     </>
   );
