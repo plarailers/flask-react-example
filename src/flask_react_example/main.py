@@ -36,7 +36,7 @@ def main():
     update_state_thread.start()
 
     # サーバを起動します。
-    app.run()
+    app.run(debug=True)
 
 
 if __name__ == "__main__":
