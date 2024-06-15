@@ -10,7 +10,7 @@ export const App: React.FC = () => {
       fetch("/api/state")
         .then((res) => res.json())
         .then((state) => setState(state));
-    }, 1000);
+    }, 200);
 
     return () => {
       clearInterval(intervalId);
@@ -41,6 +41,12 @@ export const App: React.FC = () => {
     points,
   );
 
+  // t1 の位置と向きを計算します。
+  const t1 = calculatePositionAndDirection(
+    state["trains"]["t1"]["mileage"] / 100.0,
+    points,
+  );
+
   return (
     <>
       <h1>flask-react-example</h1>
@@ -58,7 +64,13 @@ export const App: React.FC = () => {
         <g
           transform={`translate(${t0.position.x}, ${t0.position.y}) rotate(${(t0.direction / Math.PI) * 180})`}
         >
-          <polygon points="10,0 -10,-10 -10,10 10,0" fill="#ff0000" />
+          <polygon points="10,0 -10,-10 -5,0 -10,10 10,0" fill="#ff0000" />
+        </g>
+
+        <g
+          transform={`translate(${t1.position.x}, ${t1.position.y}) rotate(${(t1.direction / Math.PI) * 180})`}
+        >
+          <polygon points="10,0 -10,-10 -5,0 -10,10 10,0" fill="#00ff00" />
         </g>
       </svg>
     </>

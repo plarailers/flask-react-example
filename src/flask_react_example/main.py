@@ -11,6 +11,7 @@ app = Flask(__name__, static_url_path="", static_folder="../../ui/dist")
 state = {
     "trains": {
         "t0": {"mileage": 0.0},
+        "t1": {"mileage": 50.0},
     },
 }
 
@@ -26,6 +27,9 @@ def update_state_loop():
     while True:
         state["trains"]["t0"]["mileage"] = (
             state["trains"]["t0"]["mileage"] + 0.5
+        ) % 100.0
+        state["trains"]["t1"]["mileage"] = (
+            state["trains"]["t1"]["mileage"] + 0.5
         ) % 100.0
         time.sleep(0.1)
 
